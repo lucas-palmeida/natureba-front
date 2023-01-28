@@ -1,19 +1,23 @@
-import { HomeConteiner, IconDiv,  TopConteiner } from "../css/css"
-import { RiLogoutBoxRLine } from "react-icons/ri"
-import { useNavigate } from "react-router-dom"
+//import { HomeConteiner, IconDiv, TopConteiner } from "../css/css"
+//import { RiLogoutBoxRLine } from "react-icons/ri"
+//import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Product from "../components/Product.js"
 import styled from "styled-components"
+import Header from "../components/Header"
+import { fileURLToPath } from "url"
 
 
+export default function Home({ apiForm}) {
 
-export default function Home({ apiForm }) {
+    const [form, setForm] =useState( {search:""})
+    const [listProducts, setListProducts] = useState([])
+    const [filtervegetables, setFiltervegetables] = useState([])
+    const [filterfruits, setFilterfruits] = useState([])
+    const [filterleaf, setFilterleaf] = useState([])
 
-    const [listProducts, setListProducts]=useState([])
-    //const [selectProducts, setSelectProducts] =useEffect([])
-
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const token = apiForm.token
 
@@ -23,96 +27,105 @@ export default function Home({ apiForm }) {
         }
     }
 
-    axios.get("http://localhost:5001/products")
-    .then((res) =>{ 
+
+    useEffect(() => {
+
+        axios.get("http://localhost:5001/products")
+            .then((res) => {
+
+                
+                let vegetables = res.data.filter(item => item.category === "legumes")
+                let fruits = res.data.filter(item => item.category === "frutas")
+                let leaf = res.data.filter(item => item.category === "folhas")
+                let inputFilter =res.data.filter(item => item.name.includes(form.search))
+                
+                setFiltervegetables(vegetables)
+                setFilterfruits(fruits)
+                setFilterleaf(leaf)
+                setListProducts(inputFilter)
+
+                console.log(inputFilter,"teste")
+            })
+
+    }, [form])
+
+
     
- setListProducts(res.data)
 
 
 
 
-console.log(res.data)
-} )
-
-
-function exit() {
-        navigate("/")
-    }
+    // function exit() {
+    //         navigate("/")
+    //     }
+console.log(form,"form")
     
-    return (
-        
+
+return (
+
+
         <HomeConteinerA>
 
-            <TopConteiner>
-                <p>{`Natureba.Store`}</p>
-                <p>{`este é o token do usuário : ${apiForm.token}`}</p>
-                <p>{`este é o nome do usuário :${apiForm.name}`}</p>
-                <IconDiv onClick={exit}>
-                    <RiLogoutBoxRLine />
-                </IconDiv>
-            </TopConteiner>
+            <Header apiForm={apiForm} setForm={setForm} form={form} />
 
-    <h2>Categoria 01 </h2>
+
+{listProducts.length > 17?
+        <div>
+            <h2>vegetables</h2>
+            <ContainerCategoryA>
+
+                {filtervegetables.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
+
+
+            </ContainerCategoryA>
+
+            <h2>fruits </h2>
+            <ContainerCategoryB>
+
+                {filterfruits.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
+
+            </ContainerCategoryB>
+
+            <h2>leaf </h2>
+
+            <ContainerCategoryC>
+
+                {filterleaf.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
+
+            </ContainerCategoryC>
+
+
+
+        </div>:
+
 <ContainerCategoryA>
-            
-    {listProducts.map( p => (  <Product name = {p.name} price ={p.price} category={p.category} unity = {p.unity} picture ={p.picture}/> ))}
-             
-                
-                </ContainerCategoryA>
-        
-    <h2>Categoria 02 </h2>
-                <ContainerCategoryB>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                
-                </ContainerCategoryB>
-        
-    <h2>Categoria 03 </h2>
-                <ContainerCategoryC>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                <Product/>
-                
-                </ContainerCategoryC>
-        
+{listProducts.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
+</ContainerCategoryA>
+
+}
+
         </HomeConteinerA>
-
     )
-
 }
 
 
 
-
-const HomeConteinerA =styled.main`
-    display:flex;
-    flex-direction:column;
+const HomeConteinerA = styled.main`
+flex:display;
+flex-direction:column;
 `
 
-const ContainerCategoryA =styled.section`
-    display:flex;
-    overflow-x:scroll;
-`
-
-const ContainerCategoryB =styled.section`
+const ContainerCategoryA = styled.section`
     display:flex;
     overflow-x:scroll;
 `
 
-const ContainerCategoryC =styled.section`
+const ContainerCategoryB = styled.section`
+    display:flex;
+    overflow-x:scroll;
+`
+
+const ContainerCategoryC = styled.section`
     display:flex;
     overflow-x:scroll;
 `

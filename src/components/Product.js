@@ -1,18 +1,26 @@
 import styled from "styled-components"
 
 
-export default function Poduct({name, price, category, unity, picture}){
+export default function Poduct({ name, price, category, unity, picture }) {
+
+
+    function SelectProduct(){
+
+
+    }
+
+    return (
 
 
 
-    return(
-        <ContainerProduct>
-        <li>
-        <img src= {picture} alt={name}/>
-        <p>R$ {price}/ {unity}</p>
-        <p>{name}</p>
-        </li>    
+        <ContainerProduct onClick={SelectProduct}>
+            <li>
+                <img src={picture} alt={name} />
+                <p>R$ {price}/ {unity}</p>
+                <p>{name}</p>
+            </li>
         </ContainerProduct>
+
     )
 }
 
