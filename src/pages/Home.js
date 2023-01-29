@@ -4,10 +4,14 @@ import axios from "axios"
 import Product from "../components/Product.js"
 import styled from "styled-components"
 import Header from "../components/Header"
+import { useAuth } from "../providers/auth.js"
 
-export default function Home({ apiForm, carrinho, setCarrinho }) {
+export default function Home() {
 
-    const [count, setCount] = useState(0)
+    const {apiForm,setCarrinho, carrinho}= useAuth()
+
+
+   // const [count, setCount] = useState(0)
    // const [carrinho, setCarrinho] = useState([])
     const [form, setForm] = useState({ search: "" })
     const [listProducts, setListProducts] = useState([])
@@ -49,13 +53,21 @@ export default function Home({ apiForm, carrinho, setCarrinho }) {
 
         if (isSlected && cont > 0) {
             const newList = carrinho.filter((s) => s.name !== name)
+
+            localStorage.setItem('carrinho', JSON.stringify([...newList, { name, price, cont }]));
+            
             setCarrinho([...newList, { name, price, cont }])
         } else if (cont <= 0) {
             const newList = carrinho.filter((s) => s.name !== name)
+
+            localStorage.setItem('carrinho', JSON.stringify([...newList]));
+          
             setCarrinho([...newList])
         }
         else {
             setCarrinho([...carrinho, { name, price, cont }])
+            localStorage.setItem('carrinho', JSON.stringify([...carrinho, { name, price, cont }]));
+            
         }
     }
 
@@ -82,7 +94,7 @@ export default function Home({ apiForm, carrinho, setCarrinho }) {
                             {filtervegetables.map(p => (<Product key={p._id}
                                 name={p.name} price={p.price} category={p.category}
                                 unit={p.unit} picture={p.picture}
-                                count={count} setCount={setCount}
+                                
                                 handleSelect={handleSelect} />))}
                         </div>
 
@@ -97,7 +109,7 @@ export default function Home({ apiForm, carrinho, setCarrinho }) {
                         {filterfruits.map(p => (<Product key={p._id}
                             name={p.name} price={p.price} category={p.category}
                             unit={p.unit} picture={p.picture}
-                            count={count} setCount={setCount}
+                            
                             handleSelect={handleSelect} />))}
 </div>
                     </ContainerCategory>
@@ -112,7 +124,7 @@ export default function Home({ apiForm, carrinho, setCarrinho }) {
                         {filterleaf.map(p => (<Product key={p._id}
                             name={p.name} price={p.price} category={p.category}
                             unit={p.unit} picture={p.picture}
-                            count={count} setCount={setCount}
+                            
                             handleSelect={handleSelect} />))}
 </div>
                     </ContainerCategory>
@@ -130,7 +142,7 @@ export default function Home({ apiForm, carrinho, setCarrinho }) {
                     {listProducts.map(p => (<Product key={p._id}
                         name={p.name} price={p.price} category={p.category}
                         unit={p.unit} picture={p.picture}
-                        count={count} setCount={setCount}
+                        
                         handleSelect={handleSelect} />))}
 
                     </ContainerFilter>
