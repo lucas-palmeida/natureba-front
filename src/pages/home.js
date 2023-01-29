@@ -6,12 +6,15 @@ import axios from "axios"
 import Product from "../components/Product.js"
 import styled from "styled-components"
 import Header from "../components/Header"
-import { fileURLToPath } from "url"
+//import { count } from "console"
+//import { fileURLToPath } from "url"
 
 
-export default function Home({ apiForm}) {
+export default function Home({ apiForm }) {
 
-    const [form, setForm] =useState( {search:""})
+    const [count, setCount] = useState(0)
+    const [carrinho, setCarrinho] = useState([])
+    const [form, setForm] = useState({ search: "" })
     const [listProducts, setListProducts] = useState([])
     const [filtervegetables, setFiltervegetables] = useState([])
     const [filterfruits, setFilterfruits] = useState([])
@@ -33,76 +36,113 @@ export default function Home({ apiForm}) {
         axios.get("http://localhost:5001/products")
             .then((res) => {
 
-                
+
                 let vegetables = res.data.filter(item => item.category === "legumes")
                 let fruits = res.data.filter(item => item.category === "frutas")
                 let leaf = res.data.filter(item => item.category === "folhas")
-                let inputFilter =res.data.filter(item => item.name.includes(form.search))
-                
+                let inputFilter = res.data.filter(item => item.name.includes(form.search))
+
                 setFiltervegetables(vegetables)
                 setFilterfruits(fruits)
                 setFilterleaf(leaf)
                 setListProducts(inputFilter)
 
-                console.log(inputFilter,"teste")
+                //                console.log(inputFilter,"teste")
             })
 
-    }, [form])
-
-
-    
+    }, [])
 
 
 
+
+    function handleSelect(name, price, cont) {
+
+        //let test= {name:name, price:price}
+
+
+        const isSlected = carrinho.find((s) => s.name === name)
+
+        if (isSlected && cont > 0) {
+            const newList = carrinho.filter((s) => s.name !== name)
+            setCarrinho([...newList, { name, price, cont }])
+        } else if (cont <= 0) {
+            const newList = carrinho.filter((s) => s.name !== name)
+            setCarrinho([...newList])
+        }
+        else {
+            setCarrinho([...carrinho, { name, price, cont }])
+        }
+
+
+    }
+
+    console.log(carrinho, "carrinho")
 
     // function exit() {
     //         navigate("/")
     //     }
-console.log(form,"form")
-    
+    //console.log(form,"form")
+    //    console.log(carrinho,"Carrinhooo")
 
-return (
+    return (
 
 
         <HomeConteinerA>
 
-            <Header apiForm={apiForm} setForm={setForm} form={form} />
+            <Header apiForm={apiForm} setForm={setForm} form={form} carrinho={carrinho} />
 
 
-{listProducts.length > 17?
-        <div>
-            <h2>vegetables</h2>
-            <ContainerCategoryA>
+            {listProducts.length > 17 ?
+                <div>
+                    <h2>vegetables</h2>
+                    <ContainerCategoryA>
 
-                {filtervegetables.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
-
-
-            </ContainerCategoryA>
-
-            <h2>fruits </h2>
-            <ContainerCategoryB>
-
-                {filterfruits.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
-
-            </ContainerCategoryB>
-
-            <h2>leaf </h2>
-
-            <ContainerCategoryC>
-
-                {filterleaf.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
-
-            </ContainerCategoryC>
+                        {filtervegetables.map(p => (<Product key={p._id}
+                            name={p.name} price={p.price} category={p.category}
+                            unit={p.unit} picture={p.picture}
+                            count={count} setCount={setCount}
+                            handleSelect={handleSelect} />))}
 
 
+                    </ContainerCategoryA>
 
-        </div>:
+                    <h2>fruits </h2>
+                    <ContainerCategoryB>
 
-<ContainerCategoryA>
-{listProducts.map(p => (<Product key={p._id} name={p.name} price={p.price} category={p.category} unity={p.unity} picture={p.picture} />))}
-</ContainerCategoryA>
+                        {filterfruits.map(p => (<Product key={p._id}
+                            name={p.name} price={p.price} category={p.category}
+                            unit={p.unit} picture={p.picture}
+                            count={count} setCount={setCount}
+                            handleSelect={handleSelect} />))}
 
-}
+                    </ContainerCategoryB>
+
+                    <h2>leaf </h2>
+
+                    <ContainerCategoryC>
+
+                        {filterleaf.map(p => (<Product key={p._id}
+                            name={p.name} price={p.price} category={p.category}
+                            unit={p.unit} picture={p.picture}
+                            count={count} setCount={setCount}
+                            handleSelect={handleSelect} />))}
+
+                    </ContainerCategoryC>
+
+
+
+                </div> :
+
+                <ContainerCategoryA>
+                    {listProducts.map(p => (<Product key={p._id}
+                        name={p.name} price={p.price} category={p.category}
+                        unit={p.unit} picture={p.picture}
+                        count={count} setCount={setCount}
+                        handleSelect={handleSelect} />))}
+
+                </ContainerCategoryA>
+
+            }
 
         </HomeConteinerA>
     )

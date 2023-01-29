@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 
-export default function Header({ apiForm, form, setForm }) {
+export default function Header({ apiForm, form, setForm, carrinho}) {
 
     
     const navigate = useNavigate()
@@ -17,10 +17,9 @@ export default function Header({ apiForm, form, setForm }) {
     function handleForm(e) {
         setForm({
             ...form,
-            [e.target.name]: e.target.value,
+            [e.target.name]: e.target.value
         })
     }
-
 
 
     function exit() {
@@ -33,8 +32,9 @@ export default function Header({ apiForm, form, setForm }) {
         <ContainerHeader>
 
 
+
             <Contairner>
-                <p>{`Natureba.Store`}</p>
+                <h1>{`Natureba.Store`}</h1>
 
                 <p>{apiForm.name}</p>
 
@@ -57,8 +57,10 @@ export default function Header({ apiForm, form, setForm }) {
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </form>
-
-                <ion-icon name="cart-outline"></ion-icon>
+            <span>
+                <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
+            {carrinho.length}
+            </span>
             </Contairner>
 
         </ContainerHeader>
@@ -77,7 +79,17 @@ ion-con{
 const Contairner = styled.section`
 display:flex;
 justify-content:space-around;
+align-items:center;
 margin-top:15px;
+h1{
+    font-family:"open-sans";
+    font-size:42px;
+    font-weight:700;
+    width:263px;
+    height:56px;
+    color:green;
+    text-align:center;
+}
 button{
     background-color:green;
 ion-icon{
@@ -91,9 +103,15 @@ ion-icon{
     color:green;
        width:25px;
     height:25px;
+    
 }
 span{
-    width:70px;
+    display:flex;
+    width:90px;
+    justify-content:space-between;
+    align-items:center;
 }
+
+
 
 `
