@@ -5,10 +5,10 @@ import Product from "../components/Product.js"
 import styled from "styled-components"
 import Header from "../components/Header"
 
-export default function Home({ apiForm }) {
+export default function Home({ apiForm, carrinho, setCarrinho }) {
 
     const [count, setCount] = useState(0)
-    const [carrinho, setCarrinho] = useState([])
+   // const [carrinho, setCarrinho] = useState([])
     const [form, setForm] = useState({ search: "" })
     const [listProducts, setListProducts] = useState([])
     const [filtervegetables, setFiltervegetables] = useState([])
@@ -17,13 +17,13 @@ export default function Home({ apiForm }) {
 
      const navigate = useNavigate()
 
-    const token = apiForm.token
+    // const token = apiForm.token
 
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }
+    // const config = {
+    //     headers: {
+    //         "Authorization": `Bearer ${token}`
+    //     }
+    // }
 
 
     useEffect(() => {
@@ -139,8 +139,16 @@ export default function Home({ apiForm }) {
                 </>
             }
 
+{listProducts.length === 0 ? 
+<TitleSearch> Oops não encontramos resultados para sua pesquisa</TitleSearch>:
+<></>
+}
         </HomeConteinerA>
+
+    
     )
+
+
 }
 
 
@@ -148,6 +156,9 @@ const HomeConteinerA = styled.main`
 flex:display;
 flex-direction:column;
 background-color:#f7f7f7;
+padding-top:130px;
+padding-bottom:100px
+
 `
 
 const ContainerCategory = styled.section`

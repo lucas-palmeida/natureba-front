@@ -1,10 +1,10 @@
 import { RiLogoutBoxRLine } from "react-icons/ri"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 export default function Header({ apiForm, form, setForm, carrinho, exit, setListProducts}) {
     
-    const navigate = useNavigate()
+//    const navigate = useNavigate()
 
     function handleFilter(e) {
         e.preventDefault();
@@ -31,9 +31,9 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
         })
     }
 
-    function exit() {
-        navigate("/")
-    }
+    // function exit() {
+    //     navigate("/")
+    // }
 
     return (
 
@@ -42,12 +42,10 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
             <Contairner>
                 <h1>{`Natureba.Store`}</h1>
 
-                <p>{apiForm.name}</p>
-
                 {apiForm.token === undefined ?
                     <span onClick={exit}>
                         <ion-icon name="log-in-outline"></ion-icon> <span>Entrar</span></span> :
-                    <span> onClick={exit} <RiLogoutBoxRLine></RiLogoutBoxRLine><span>Sair</span></span>
+                    <span onClick={exit}> <RiLogoutBoxRLine></RiLogoutBoxRLine><span>Sair</span></span>
                 }
             </Contairner>
 
@@ -63,10 +61,12 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </form>
-            <span>
+            
+            <Link to="/carrinho"><span>
                 <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
             {carrinho.length}
             </span>
+            </Link>
             </Contairner>
 
         </ContainerHeader>
@@ -74,9 +74,14 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
 }
 
 const ContainerHeader = styled.header`
+width:100vw;
 display:flex;
 flex-direction:column;
 background-color:white;
+position:fixed;
+top:0;
+left:0;
+padding-bottom:10px;
 ion-con{
     width:25px;
     height:25px;
@@ -87,6 +92,9 @@ display:flex;
 justify-content:space-around;
 align-items:center;
 margin-top:15px;
+a{
+    text-decoration:none;
+}
 h1{
     font-family:"open-sans";
     font-size:42px;
@@ -116,13 +124,10 @@ ion-icon{
 span,
 ion-icon{
     color:green;
-       width:25px;
-    height:25px;
     
 }
 span{
     display:flex;
-    width:90px;
     justify-content:space-between;
     align-items:center;
 }
