@@ -6,7 +6,6 @@ export default function Poduct({ name, price, category, unit, picture, handleSel
     
     const [count, setcount] =useState(0)
     
-
     let cont= 0
 
     function soma(){
@@ -27,8 +26,6 @@ handleSelect(name,price,cont)
     }
 
     return (
-
-
 
         <ContainerProduct>
 
