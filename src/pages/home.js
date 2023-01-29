@@ -1,14 +1,9 @@
-//import { HomeConteiner, IconDiv, TopConteiner } from "../css/css"
-//import { RiLogoutBoxRLine } from "react-icons/ri"
-//import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Product from "../components/Product.js"
 import styled from "styled-components"
 import Header from "../components/Header"
-//import { count } from "console"
-//import { fileURLToPath } from "url"
-
 
 export default function Home({ apiForm }) {
 
@@ -20,7 +15,7 @@ export default function Home({ apiForm }) {
     const [filterfruits, setFilterfruits] = useState([])
     const [filterleaf, setFilterleaf] = useState([])
 
-    // const navigate = useNavigate()
+     const navigate = useNavigate()
 
     const token = apiForm.token
 
@@ -36,7 +31,6 @@ export default function Home({ apiForm }) {
         axios.get("http://localhost:5001/products")
             .then((res) => {
 
-
                 let vegetables = res.data.filter(item => item.category === "legumes")
                 let fruits = res.data.filter(item => item.category === "frutas")
                 let leaf = res.data.filter(item => item.category === "folhas")
@@ -46,19 +40,10 @@ export default function Home({ apiForm }) {
                 setFilterfruits(fruits)
                 setFilterleaf(leaf)
                 setListProducts(inputFilter)
-
-                //                console.log(inputFilter,"teste")
             })
-
-    }, [])
-
-
-
+    }, [form])
 
     function handleSelect(name, price, cont) {
-
-        //let test= {name:name, price:price}
-
 
         const isSlected = carrinho.find((s) => s.name === name)
 
@@ -72,76 +57,86 @@ export default function Home({ apiForm }) {
         else {
             setCarrinho([...carrinho, { name, price, cont }])
         }
-
-
     }
 
-    console.log(carrinho, "carrinho")
-
-    // function exit() {
-    //         navigate("/")
-    //     }
-    //console.log(form,"form")
-    //    console.log(carrinho,"Carrinhooo")
-
+     function exit() {
+             navigate("/")
+         }
+    
     return (
-
 
         <HomeConteinerA>
 
-            <Header apiForm={apiForm} setForm={setForm} form={form} carrinho={carrinho} />
-
+            <Header apiForm={apiForm} setForm={setForm} form={form} carrinho={carrinho} exit={exit} setListProducts={setListProducts} />
 
             {listProducts.length > 17 ?
                 <div>
-                    <h2>vegetables</h2>
-                    <ContainerCategoryA>
 
-                        {filtervegetables.map(p => (<Product key={p._id}
-                            name={p.name} price={p.price} category={p.category}
-                            unit={p.unit} picture={p.picture}
-                            count={count} setCount={setCount}
-                            handleSelect={handleSelect} />))}
+                    <ContainerCategory>
 
+                        <div>
+                            <span><h2>vegetables</h2></span>
+                        </div>
 
-                    </ContainerCategoryA>
+                        <div>
+                            {filtervegetables.map(p => (<Product key={p._id}
+                                name={p.name} price={p.price} category={p.category}
+                                unit={p.unit} picture={p.picture}
+                                count={count} setCount={setCount}
+                                handleSelect={handleSelect} />))}
+                        </div>
 
-                    <h2>fruits </h2>
-                    <ContainerCategoryB>
+                    </ContainerCategory>
 
+                    <ContainerCategory>
+                    <div>
+                        <h2>fruits </h2>
+                        </div>
+
+                        <div>
                         {filterfruits.map(p => (<Product key={p._id}
                             name={p.name} price={p.price} category={p.category}
                             unit={p.unit} picture={p.picture}
                             count={count} setCount={setCount}
                             handleSelect={handleSelect} />))}
+</div>
+                    </ContainerCategory>
 
-                    </ContainerCategoryB>
+                    <ContainerCategory>
+                        <div>
 
-                    <h2>leaf </h2>
+                        <h2>leaf </h2>
+                        </div>
 
-                    <ContainerCategoryC>
-
+                        <div>
                         {filterleaf.map(p => (<Product key={p._id}
                             name={p.name} price={p.price} category={p.category}
                             unit={p.unit} picture={p.picture}
                             count={count} setCount={setCount}
                             handleSelect={handleSelect} />))}
-
-                    </ContainerCategoryC>
-
+</div>
+                    </ContainerCategory>
 
 
                 </div> :
-
-                <ContainerCategoryA>
+<>
+                <TitleSearch> Resultado para "{form.search}"</TitleSearch>
+                {listProducts.length === 1 ?<ReturnSeach> {listProducts.length} resuldado encontrado</ReturnSeach>:
+                <ReturnSeach> {listProducts.length} resuldados encontrados</ReturnSeach>
+                }
+                <ContainerCategory>
+                                        
+                <ContainerFilter>
                     {listProducts.map(p => (<Product key={p._id}
                         name={p.name} price={p.price} category={p.category}
                         unit={p.unit} picture={p.picture}
                         count={count} setCount={setCount}
                         handleSelect={handleSelect} />))}
 
-                </ContainerCategoryA>
+                    </ContainerFilter>
 
+                </ContainerCategory>
+                </>
             }
 
         </HomeConteinerA>
@@ -149,23 +144,52 @@ export default function Home({ apiForm }) {
 }
 
 
-
 const HomeConteinerA = styled.main`
 flex:display;
 flex-direction:column;
+background-color:#f7f7f7;
 `
 
-const ContainerCategoryA = styled.section`
+const ContainerCategory = styled.section`
     display:flex;
+    flex-direction:column;
     overflow-x:scroll;
+    background-color:white;
+    margin-top:10px;
+    div:nth-child(1){
+        display:flex;
+        align-items:center;
+        width:375px;
+        height:75px;
+        h2{
+            font-family:'open-sans';
+            font-size:18px;
+            font-weight:700;
+            margin-left:20px;            
+        }
+    }
+    div:nth-child(2){
+    display:flex;
+    }
 `
 
-const ContainerCategoryB = styled.section`
-    display:flex;
-    overflow-x:scroll;
+const ContainerFilter = styled.section`
+margin-top:10px;
+display:flex;
 `
 
-const ContainerCategoryC = styled.section`
-    display:flex;
-    overflow-x:scroll;
+const TitleSearch = styled.h2`
+width:205px;
+height:56px;
+display:flex;
+font-size:28px;
+font-weight:700;
+padding-left:15px;
+word-wrap:break-word;
+margin: 20px 0 20px 0;
+`
+
+const ReturnSeach = styled.p`
+margin-bottom:30px;
+padding-left:15px;
 `

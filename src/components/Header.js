@@ -1,17 +1,27 @@
-import { useState } from "react"
 import { RiLogoutBoxRLine } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
-
-
-export default function Header({ apiForm, form, setForm, carrinho}) {
-
+import axios from "axios"
+export default function Header({ apiForm, form, setForm, carrinho, exit, setListProducts}) {
     
     const navigate = useNavigate()
 
     function handleFilter(e) {
         e.preventDefault();
 
+        axios.get("http://localhost:5001/products")
+        .then((res) => {
+
+
+            let inputFilter = res.data.filter(item => item.name.includes(form.search))
+
+        
+            setListProducts(inputFilter)
+
+            //                console.log(inputFilter,"teste")
+        })
+
+        
     }
 
     function handleForm(e) {
@@ -21,17 +31,13 @@ export default function Header({ apiForm, form, setForm, carrinho}) {
         })
     }
 
-
     function exit() {
         navigate("/")
     }
 
-
     return (
 
         <ContainerHeader>
-
-
 
             <Contairner>
                 <h1>{`Natureba.Store`}</h1>
@@ -39,9 +45,9 @@ export default function Header({ apiForm, form, setForm, carrinho}) {
                 <p>{apiForm.name}</p>
 
                 {apiForm.token === undefined ?
-                    <span>
-                        <ion-icon name="log-in-outline" onClick={exit}></ion-icon> <span>Entrar</span></span> :
-                    <span><RiLogoutBoxRLine onClick={exit}></RiLogoutBoxRLine><span>Sair</span></span>
+                    <span onClick={exit}>
+                        <ion-icon name="log-in-outline"></ion-icon> <span>Entrar</span></span> :
+                    <span> onClick={exit} <RiLogoutBoxRLine></RiLogoutBoxRLine><span>Sair</span></span>
                 }
             </Contairner>
 
@@ -67,10 +73,10 @@ export default function Header({ apiForm, form, setForm, carrinho}) {
     )
 }
 
-
 const ContainerHeader = styled.header`
 display:flex;
 flex-direction:column;
+background-color:white;
 ion-con{
     width:25px;
     height:25px;
@@ -89,6 +95,15 @@ h1{
     height:56px;
     color:green;
     text-align:center;
+}
+form{
+    display:flex;
+    align-items:center;
+    box-sizing:border-box;
+}
+input{
+    width:210px;
+    height:25px;
 }
 button{
     background-color:green;
@@ -111,7 +126,4 @@ span{
     justify-content:space-between;
     align-items:center;
 }
-
-
-
 `
