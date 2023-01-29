@@ -1,17 +1,18 @@
 import { useState } from "react"
 import styled from "styled-components"
+import { useAuth } from "../providers/auth"
 
 
 export default function Poduct({ name, price, category, unit, picture, handleSelect, }) {
-    
-    const [count, setcount] =useState(0)
+
+    const [count, setCount] =useState(0)
     
     let cont= 0
 
     function soma(){
   
         cont = count+1
-        setcount(cont)
+        setCount(cont)
 
 handleSelect(name,price,cont)
     }
@@ -20,7 +21,9 @@ handleSelect(name,price,cont)
     function subtrai(){
   
         cont = count-1
-        setcount(cont)
+
+        
+        setCount(cont)
 
 handleSelect(name,price,cont)
     }
@@ -35,7 +38,7 @@ handleSelect(name,price,cont)
             <button onClick={soma}>+</button></ContainerIcons>:
             <ButtonSoma onClick={soma}>+</ButtonSoma>}
                 <img src={picture} alt={name} />
-                <p>R$ {price}/{unit}</p>
+                <p>R$ {price.replace(".",",")}/{unit}</p>
                 <p>{name} </p>
             </li>
         </ContainerProduct>
@@ -65,8 +68,7 @@ img{
     height: 148px; //120px;//
     margin:0;
 }
-li{
-    
+li{    
 //    width:168px;
   //  height:268px;
    // padding:10px 10px 30px

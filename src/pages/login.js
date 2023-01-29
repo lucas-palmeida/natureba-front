@@ -3,12 +3,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import cestaOrganica from "../assets/cestaOrganica.jpg"
 import { Conteiner , Form } from "../css/css";
+import { useAuth } from "../providers/auth";
 
 
 
 
-export default function Login({ setApiForm }) {
+export default function Login() {
 
+    const {setApiForm}= useAuth()
     const navigate = useNavigate()
 
     const [form, setForm] = useState({
@@ -32,6 +34,8 @@ export default function Login({ setApiForm }) {
 
             const tokenObj = await axios.post(`${process.env.REACT_APP_API_URL}`, form)
 
+            localStorage.setItem('apiForm', JSON.stringify(tokenObj.data));
+            
             console.log(tokenObj)
 
             setApiForm(tokenObj.data)
