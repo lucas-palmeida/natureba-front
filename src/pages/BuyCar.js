@@ -5,7 +5,7 @@ import { useAuth } from "../providers/auth";
 
 export default function BuyCar() {
 
-    const { apiForm, carrinho } = useAuth()
+    const { apiForm, cart } = useAuth()
     const [formBuy,setFormBuy] = useState([
         {name:"",
         street:"",
@@ -21,7 +21,7 @@ export default function BuyCar() {
     ])
 
 
-    const cloneCart = carrinho
+    const cloneCart = cart
 
     let sum = 0;
 
@@ -62,7 +62,7 @@ e.preventDefault()
             </ContainerList>
 
 
-            {carrinho.map(item => (<ListCar key={item.name} name={item.name} price={item.price} cont={item.cont} />))}
+            {cart.map(item => (<ListCar key={item.name} name={item.name} price={item.price} cont={item.cont} />))}
 
             <TituleResult>
 

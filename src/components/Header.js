@@ -2,7 +2,7 @@ import { RiLogoutBoxRLine } from "react-icons/ri"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
-export default function Header({ apiForm, form, setForm, carrinho, exit, setListProducts}) {
+export default function Header({ apiForm, form, setForm, cart, exit, setListProducts}) {
     
 //    const navigate = useNavigate()
 
@@ -64,7 +64,7 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
             
             <Link to="/carrinho"><span>
                 <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
-            {carrinho.length}
+            {cart.length}
             </span>
             </Link>
             </Contairner>

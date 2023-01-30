@@ -11,7 +11,7 @@ export const AuthProvider = (props) =>{
     //     token:''
     // })
 
-    const [carrinho,setCarrinho] =React.useState([])
+    const [cart,setCart] =React.useState([])
 
 
 useEffect(()=>{
@@ -20,15 +20,15 @@ useEffect(()=>{
     if(apiFormStorage){
         setApiForm(JSON.parse(apiFormStorage))
     }
-    const carrinhoStorage = localStorage.getItem('carrinho');
-    if(carrinhoStorage){
-        setCarrinho(JSON.parse(carrinhoStorage))
+    const cartStorage = localStorage.getItem('cart');
+    if(cartStorage){
+        setCart(JSON.parse(cartStorage))
     }
 
 },[])
 
 return(
-    <AuthContext.Provider value = {{apiForm,setApiForm,carrinho,setCarrinho}}>
+    <AuthContext.Provider value = {{apiForm,setApiForm,cart,setCart}}>
         {props.children}
     </AuthContext.Provider>
 )
