@@ -29,9 +29,12 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 height:30px;
-margin-top:1px;
+margin:1px 1px 0 1px;;
 background-color:white;
+padding: 0 5px 0 5px;
+
 span:nth-child(1){
 width:130px;
 }
+
 `
