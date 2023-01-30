@@ -1,12 +1,12 @@
 import { RiLogoutBoxRLine } from "react-icons/ri"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 
 
 
-export default function Header({ apiForm, form, setForm, cart, exit, setListProducts}) {
-    
+export default function Header({ apiForm, form, setForm, cart, exit, setListProducts }) {
+
     const navigate = useNavigate()
 
 
@@ -15,18 +15,18 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
         e.preventDefault();
 
         axios.get("http://localhost:5001/products")
-        .then((res) => {
+            .then((res) => {
 
 
-            let inputFilter = res.data.filter(item => item.name.includes(form.search))
+                let inputFilter = res.data.filter(item => item.name.includes(form.search))
 
-        
-            setListProducts(inputFilter)
 
-            //                console.log(inputFilter,"teste")
-        })
+                setListProducts(inputFilter)
 
-        
+                //                console.log(inputFilter,"teste")
+            })
+
+
     }
 
     function handleForm(e) {
@@ -36,12 +36,12 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
         })
     }
 
-    function moveCart(){
+    function moveCart() {
 
 
-        if(!apiForm.token){
-            navigate("/")   
-        }else{navigate("/carrinho") }
+        if (!apiForm.token) {
+            navigate("/")
+        } else { navigate("/carrinho") }
     }
 
     return (
@@ -70,12 +70,14 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </form>
-            
-            <Link to="/carrinho"><span>
-                <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
-            {carrinho.length}
-            </span>
-            </ButtonCard>
+
+                <Link to="/carrinho">
+                    <span>
+                        <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
+                        {carrinho.length}
+                    </span>
+                </Link>
+                <ButtonCard />
             </Contairner>
 
         </ContainerHeader>

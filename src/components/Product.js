@@ -5,27 +5,27 @@ import { useAuth } from "../providers/auth"
 
 export default function Poduct({ name, price, category, unit, picture, handleSelect, }) {
 
-    const [count, setCount] =useState(0)
-    
-    let cont= 0
+    const [count, setCount] = useState(0)
 
-    function soma(){
-  
-        cont = count+1
+    let cont = 0
+
+    function soma() {
+
+        cont = count + 1
         setCount(cont)
 
-handleSelect(name,price,cont)
+        handleSelect(name, price, cont)
     }
 
 
-    function subtrai(){
-  
-        cont = count-1
+    function subtrai() {
 
-        
+        cont = count - 1
+
+
         setCount(cont)
 
-handleSelect(name,price,cont)
+        handleSelect(name, price, cont)
     }
 
     return (
@@ -33,12 +33,12 @@ handleSelect(name,price,cont)
         <ContainerProduct>
 
             <li>
-        {count>0? <ContainerIcons><button onClick={subtrai}>-</button>
-            <span> {count}</span>
-            <button onClick={soma}>+</button></ContainerIcons>:
-            <ButtonSoma onClick={soma}>+</ButtonSoma>}
+                {count > 0 ? <ContainerIcons><button onClick={subtrai}>-</button>
+                    <span> {count}</span>
+                    <button onClick={soma}>+</button></ContainerIcons> :
+                    <ButtonSoma onClick={soma}>+</ButtonSoma>}
                 <img src={picture} alt={name} />
-                <p>R$ {price.replace(".",",")}/{unit}</p>
+                <p>R$ {price.replace(".", ",")}/{unit}</p>
                 <p>{name} </p>
             </li>
         </ContainerProduct>
@@ -88,7 +88,7 @@ span{
 
 `
 
-const ButtonSoma= styled.button`
+const ButtonSoma = styled.button`
 margin-left: 130.2px;
 `
 
