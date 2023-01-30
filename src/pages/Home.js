@@ -8,11 +8,11 @@ import { useAuth } from "../providers/auth.js"
 
 export default function Home() {
 
-    const {apiForm,setCarrinho, carrinho}= useAuth()
+    const {apiForm,setCart, cart}= useAuth()
 
 
    // const [count, setCount] = useState(0)
-   // const [carrinho, setCarrinho] = useState([])
+   // const [cart, setCart] = useState([])
     const [form, setForm] = useState({ search: "" })
     const [listProducts, setListProducts] = useState([])
     const [filtervegetables, setFiltervegetables] = useState([])
@@ -51,24 +51,24 @@ export default function Home() {
 
     function handleSelect(name, price, cont) {
 
-        const isSlected = carrinho.find((s) => s.name === name)
+        const isSlected = cart.find((s) => s.name === name)
 
         if (isSlected && cont > 0) {
-            const newList = carrinho.filter((s) => s.name !== name)
+            const newList = cart.filter((s) => s.name !== name)
 
-            localStorage.setItem('carrinho', JSON.stringify([...newList, { name, price, cont }]));
+            localStorage.setItem('cart', JSON.stringify([...newList, { name, price, cont }]));
             
-            setCarrinho([...newList, { name, price, cont }])
+            setCart([...newList, { name, price, cont }])
         } else if (cont <= 0) {
-            const newList = carrinho.filter((s) => s.name !== name)
+            const newList = cart.filter((s) => s.name !== name)
 
-            localStorage.setItem('carrinho', JSON.stringify([...newList]));
+            localStorage.setItem('cart', JSON.stringify([...newList]));
           
-            setCarrinho([...newList])
+            setCart([...newList])
         }
         else {
-            setCarrinho([...carrinho, { name, price, cont }])
-            localStorage.setItem('carrinho', JSON.stringify([...carrinho, { name, price, cont }]));
+            setCart([...cart, { name, price, cont }])
+            localStorage.setItem('cart', JSON.stringify([...cart, { name, price, cont }]));
             
         }
     }
@@ -81,7 +81,7 @@ export default function Home() {
 
         <HomeConteinerA>
 
-            <Header apiForm={apiForm} setForm={setForm} form={form} carrinho={carrinho} exit={exit} setListProducts={setListProducts} />
+            <Header apiForm={apiForm} setForm={setForm} form={form} cart={cart} exit={exit} setListProducts={setListProducts} />
 
             {listProducts.length > 17 ?
                 <div>

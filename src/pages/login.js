@@ -32,7 +32,7 @@ export default function Login() {
         
         try {
 
-            const tokenObj = await axios.post(`${process.env.REACT_APP_API_URL}`, form)
+            const tokenObj = await axios.post(`http://localhost:5001/`, form)
 
             localStorage.setItem('apiForm', JSON.stringify(tokenObj.data));
             

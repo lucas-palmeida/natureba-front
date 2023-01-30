@@ -14,7 +14,7 @@ import { AuthProvider } from './providers/auth';
 function App() {
 
   //const [apiForm , setApiForm] = useState({})
-  const [carrinho, setCarrinho] = useState([])
+  //const [cart, setCart] = useState([])
   return (
 
     <AuthProvider>
@@ -35,7 +35,7 @@ function App() {
           
           />}/>
           <Route path='/carrinho' element={<BuyCar
-          carrinho={carrinho}
+          
           />}/>
           <Redirect to="/home" />
          
