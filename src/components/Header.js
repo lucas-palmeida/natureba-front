@@ -1,10 +1,15 @@
 import { RiLogoutBoxRLine } from "react-icons/ri"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
+
+
+
 export default function Header({ apiForm, form, setForm, cart, exit, setListProducts}) {
     
-//    const navigate = useNavigate()
+    const navigate = useNavigate()
+
+
 
     function handleFilter(e) {
         e.preventDefault();
@@ -31,9 +36,13 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
         })
     }
 
-    // function exit() {
-    //     navigate("/")
-    // }
+    function moveCart(){
+
+
+        if(!apiForm.token){
+            navigate("/")   
+        }else{navigate("/carrinho") }
+    }
 
     return (
 
@@ -62,11 +71,11 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
                     </button>
                 </form>
             
-            <Link to="/carrinho"><span>
-                <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
-            {cart.length}
+            <ButtonCard onClick={moveCart}><span>
+                <ion-icon name="cart-outline"></ion-icon>
+                carrinho {cart.length}
             </span>
-            </Link>
+            </ButtonCard>
             </Contairner>
 
         </ContainerHeader>
@@ -130,5 +139,11 @@ span{
     display:flex;
     justify-content:space-between;
     align-items:center;
+}
+
+`
+const ButtonCard = styled.button`
+span{
+    color:white;
 }
 `
