@@ -37,7 +37,6 @@ function App() {
           <Route path='/carrinho' element={<BuyCar
           
           />}/>
-          <Redirect to="/home" />
          
 
 

@@ -20,6 +20,15 @@ export const Conteiner = styled.div`
             font-family: 'Raleway', sans-serif;
             
         }
+        h1{
+        font-family:"open-sans";
+        font-size:42px;
+        font-weight:700;
+        width:263px;
+        height:56px;
+        color:green;
+        text-align:center;
+    }
 
 `
 export const Form = styled.div`

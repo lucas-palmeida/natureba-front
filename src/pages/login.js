@@ -32,7 +32,7 @@ export default function Login() {
         
         try {
 
-            const tokenObj = await axios.post(`http://localhost:5001/`, form)
+            const tokenObj = await axios.post(`${process.env.REACT_APP_API_URL}`, form)
 
             localStorage.setItem('apiForm', JSON.stringify(tokenObj.data));
             
@@ -59,6 +59,7 @@ export default function Login() {
     return (
         <Conteiner>
             <img src={cestaOrganica} />
+            <h1>{`Natureba.Store`}</h1>
             <Form>
                 <form onSubmit={sendForm}>
                     <input  placeholder="E-mail" type="email" name="email" onChange={handleForm} value={form.email} />

@@ -51,6 +51,7 @@ export default function Registration() {
     return (
         <Conteiner>
             <img src={cestaOrganica} />
+            <h1>{`Natureba.Store`}</h1>
             <Form >
                 <form onSubmit={sendForm}>
                     <input  placeholder="Nome" type="text" name="name" onChange={handleForm} value={formUser.name} />

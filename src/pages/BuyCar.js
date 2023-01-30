@@ -1,27 +1,43 @@
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ListCar from "../components/ListCar";
 import { useAuth } from "../providers/auth";
 
 export default function BuyCar() {
 
-    const { apiForm, cart } = useAuth()
-    const [formBuy,setFormBuy] = useState([
-        {name:"",
-        street:"",
-        number:"",
-        district:"",
-        city:"",
-        state:"",
-        zipcode:"",
-        namecard:"",
-        numbercard:"",
-        validity:"",
-        securitycode:""}
+
+    const navigate = useNavigate()
+    const { apiForm, cart ,setCart } = useAuth()
+    const [formBuy, setFormBuy] = useState([
+        {
+            name: "",
+            street: "",
+            number: "",
+            district: "",
+            city: "",
+            state: "",
+            zipcode: "",
+            namecard: "",
+            numbercard: "",
+            validity: "",
+            securitycode: ""
+        }
     ])
+
+    const token = apiForm.token
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
 
 
     const cloneCart = cart
+
+    console.log(cart)
 
     let sum = 0;
 
@@ -33,15 +49,66 @@ export default function BuyCar() {
 
     sum = sum.toFixed(2).replace(".", ",")
 
-function buy(e){
-e.preventDefault()
+    async function buy(e) {
+        e.preventDefault()
+
+        const sendObj = {
+            name:formBuy.name, 
+            products:cart,
+            price:sum, 
+            street: formBuy.street,
+            number: formBuy.number,
+            district: formBuy.district,
+            city: formBuy.city,
+            state: formBuy.state,
+            zipcode: formBuy.zipcode,
+            namecard: formBuy.namecard,
+            numbercard: formBuy.numbercard,
+            validity: formBuy.validity,
+            securitycode: formBuy.securitycode
+        }
+
+        try {
+
+            const wasSendObj = await axios.post(`${process.env.REACT_APP_API_URL}sales`, sendObj , config)
+            
+            console.log(wasSendObj)
+
+            alert("Pedido enviado")
+
+            setCart([])
+
+            setFormBuy({
+                name: "",
+                street: "",
+                number: "",
+                district: "",
+                city: "",
+                state: "",
+                zipcode: "",
+                namecard: "",
+                numbercard: "",
+                validity: "",
+                securitycode: ""
+            })
+
+            navigate("/home")
 
 
-}
+
+            
+        } catch (err) {
+            alert(err.response.data)
+        }
+
+
+        
+
+    }
 
 
 
-    function handleForm(e){
+    function handleForm(e) {
         setFormBuy({
             ...formBuy,
             [e.target.name]: e.target.value,
@@ -70,28 +137,28 @@ e.preventDefault()
             </TituleResult>
 
             <form onSubmit={buy}>
-            
 
-<input placeholder="Nome" type="text" name="name" onChange={handleForm} value={formBuy.name} required ></input>
-<div>
-<input placeholder="Rua" type="text" name="street" onChange={handleForm} value={formBuy.street} required></input>
-<input placeholder="N" type="number" name="number" onChange={handleForm} value={formBuy.number} required></input>
-<input placeholder="Bairro" type="text" name="district" onChange={handleForm} value={formBuy.district} required></input>
-</div>
-<div>
-<input placeholder="Cidade" type="text" name="city" onChange={handleForm} value={formBuy.city} required></input>
-<input placeholder="Estado" type="text" name="state" onChange={handleForm} value={formBuy.state} required></input>
-<input placeholder="CEP" type="number" name="zipcode" onChange={handleForm} value={formBuy.zipcode} required></input>
-</div>
 
-<input placeholder="Nome do titular do cartão" type="text" name="namecard" onChange={handleForm} value={formBuy.namecard} required></input>
-<ContainerCard>
-<input placeholder="Numero do cartão" type="number" name="numbercard" onChange={handleForm} value={formBuy.numbercard} required></input>
-<input placeholder="validade" type="date" name="validity" onChange={handleForm} value={formBuy.validity} required></input>
-<input placeholder="codigo sv" type="password" name="securitycode" onChange={handleForm} value={formBuy.securitycode} required ></input>
-</ContainerCard>
-            <Button type="submit">Finalizar</Button>
-                        </form>
+                <input placeholder="Nome" type="text" name="name" onChange={handleForm} value={formBuy.name} required ></input>
+                <div>
+                    <input placeholder="Rua" type="text" name="street" onChange={handleForm} value={formBuy.street} required></input>
+                    <input placeholder="N" type="number" name="number" onChange={handleForm} value={formBuy.number} required></input>
+                    <input placeholder="Bairro" type="text" name="district" onChange={handleForm} value={formBuy.district} required></input>
+                </div>
+                <div>
+                    <input placeholder="Cidade" type="text" name="city" onChange={handleForm} value={formBuy.city} required></input>
+                    <input placeholder="Estado" type="text" name="state" onChange={handleForm} value={formBuy.state} required></input>
+                    <input placeholder="CEP" type="number" name="zipcode" onChange={handleForm} value={formBuy.zipcode} required></input>
+                </div>
+
+                <input placeholder="Nome do titular do cartão" type="text" name="namecard" onChange={handleForm} value={formBuy.namecard} required></input>
+                <ContainerCard>
+                    <input placeholder="Numero do cartão" type="number" name="numbercard" onChange={handleForm} value={formBuy.numbercard} required></input>
+                    <input placeholder="validade" type="date" name="validity" onChange={handleForm} value={formBuy.validity} required></input>
+                    <input placeholder="codigo sv" type="password" name="securitycode" onChange={handleForm} value={formBuy.securitycode} required ></input>
+                </ContainerCard>
+                <Button type="submit">Finalizar</Button>
+            </form>
 
         </Container>
     )
@@ -163,7 +230,7 @@ background-color:white;
 padding: 0 5px 0 5px;
 `
 
-const Button =styled.button`
+const Button = styled.button`
 margin-top:10px;
 height:50px;
 border-radius:50px;

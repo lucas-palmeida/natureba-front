@@ -14,7 +14,7 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
     function handleFilter(e) {
         e.preventDefault();
 
-        axios.get("http://localhost:5001/products")
+        axios.get(`${process.env.REACT_APP_API_URL}products`)
             .then((res) => {
 
 
@@ -48,17 +48,14 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
 
         <ContainerHeader>
 
-            <Contairner>
+            <ContainerLeft>
+                <p>{`Bem Vindo ${apiForm.name}`}</p>
+
+
+            </ContainerLeft>
+
+            <ContairnerCenter>
                 <h1>{`Natureba.Store`}</h1>
-
-                {apiForm.token === undefined ?
-                    <span onClick={exit}>
-                        <ion-icon name="log-in-outline"></ion-icon> <span>Entrar</span></span> :
-                    <span onClick={exit}> <RiLogoutBoxRLine></RiLogoutBoxRLine><span>Sair</span></span>
-                }
-            </Contairner>
-
-            <Contairner>
                 <form onSubmit={handleFilter}>
                     <input name="search"
                         placeholder="pesquise por um produto especifico"
@@ -71,50 +68,63 @@ export default function Header({ apiForm, form, setForm, cart, exit, setListProd
                     </button>
                 </form>
 
+            </ContairnerCenter>
+            <ContainerRight>
+                {apiForm.token === undefined ?
+                    <span onClick={exit}>
+                        <ion-icon name="log-in-outline"></ion-icon> <span>Entrar</span></span> :
+                    <span onClick={exit}> <span>Sair</span><RiLogoutBoxRLine></RiLogoutBoxRLine></span>
+                }
+
                 <Link to="/carrinho">
                     <span>
-                        <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
-                        {carrinho.length}
+                        <span>carrinho</span>
+                        <ion-icon name="cart-outline"></ion-icon>
+                        {`|${cart.length}|`}
                     </span>
                 </Link>
-                <ButtonCard />
-            </Contairner>
+
+
+            </ContainerRight>
 
         </ContainerHeader>
     )
 }
 
 const ContainerHeader = styled.header`
-width:100vw;
-display:flex;
-flex-direction:column;
-background-color:white;
-position:fixed;
-top:0;
-left:0;
-padding-bottom:10px;
-ion-con{
-    width:25px;
-    height:25px;
-}
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+    background-color:white;
+    position:fixed;
+    background-color:#D4D4D4 0.5;
+    
+    top:0;
+    padding-bottom:10px;
+    ion-con{
+        width:25px;
+        height:25px;
+    }
 `
-const Contairner = styled.section`
+
+const ContairnerCenter = styled.section`
+width: 30%;
+height: 100%;
 display:flex;
-justify-content:space-around;
-align-items:center;
+align-items: center;
+flex-direction:column;
 margin-top:15px;
-a{
-    text-decoration:none;
-}
-h1{
-    font-family:"open-sans";
-    font-size:42px;
-    font-weight:700;
-    width:263px;
-    height:56px;
-    color:green;
-    text-align:center;
-}
+  
+    h1{
+        font-family:"open-sans";
+        font-size:42px;
+        font-weight:700;
+        width:263px;
+        height:56px;
+        color:green;
+        text-align:center;
+    }
 form{
     display:flex;
     align-items:center;
@@ -136,21 +146,46 @@ ion-icon{
     height:25px;
 }
 }
-span,
-ion-icon{
-    color:green;
-    cursor: pointer;
-    
-}
-span{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
 
 `
 const ButtonCard = styled.button`
 span{
     color:white;
 }
+`
+
+const ContainerLeft = styled.div`
+    p{
+        font-family:"open-sans";
+        font-size:22px;
+        font-weight:400;
+        margin-top: 10px;
+        width:263px;
+        height:56px;
+        color:green;
+
+    }   
+    width: 30%;
+    left: 0;
+`
+
+const ContainerRight = styled.div`
+    width: 30%;
+    right: 0;
+    a{
+        text-decoration:none;
+    }
+    span,
+    ion-icon{
+        margin-top: 5px;
+        color:green;
+        cursor: pointer;
+        
+    }
+    span{
+        display:flex;
+        justify-content: flex-end;
+        align-items:center;
+    }
+
 `

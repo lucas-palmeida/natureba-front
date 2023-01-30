@@ -57,6 +57,7 @@ button{
     color:green;
     background-color:white;
     font-weight:700;
+    cursor: pointer;
 }
 //width: 101px;
 //height:175px;

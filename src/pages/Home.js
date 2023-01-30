@@ -32,7 +32,7 @@ export default function Home() {
 
     useEffect(() => {
 
-        axios.get("http://localhost:5001/products")
+        axios.get(`${process.env.REACT_APP_API_URL}products`)
             .then((res) => {
 
                 console.log(res.data)
@@ -89,7 +89,7 @@ export default function Home() {
                     <ContainerCategory>
 
                         <div>
-                            <span><h2>vegetables</h2></span>
+                            <span><h2>Vegetais</h2></span>
                         </div>
 
                         <div>
@@ -104,7 +104,7 @@ export default function Home() {
 
                     <ContainerCategory>
                     <div>
-                        <h2>fruits </h2>
+                        <h2>Frutas</h2>
                         </div>
 
                         <div>
@@ -119,7 +119,7 @@ export default function Home() {
                     <ContainerCategory>
                         <div>
 
-                        <h2>leaf </h2>
+                        <h2>Folhagens</h2>
                         </div>
 
                         <div>
