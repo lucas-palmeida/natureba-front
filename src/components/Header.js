@@ -64,7 +64,7 @@ export default function Header({ apiForm, form, setForm, carrinho, exit, setList
             
             <Link to="/carrinho"><span>
                 <ion-icon name="cart-outline"></ion-icon><span>carrinho</span>
-            {carrinho.length}
+
             </span>
             </Link>
             </Contairner>
@@ -115,6 +115,10 @@ input{
 }
 button{
     background-color:green;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
 ion-icon{
     color:white;
     width:25px;
@@ -124,6 +128,7 @@ ion-icon{
 span,
 ion-icon{
     color:green;
+    cursor: pointer;
     
 }
 span{

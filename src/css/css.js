@@ -33,7 +33,7 @@ export const Form = styled.div`
             width: 326px;
             height: 58px;
             margin-bottom: 13px;
-            border-radius: 3px;
+            border-radius: 15px;
             border: 1px solid #D4D4D4;
             box-sizing: border-box;
             color: #000000;
@@ -53,7 +53,7 @@ export const Form = styled.div`
             width: 326px;
             height: 46px;
             background-color: green;
-            border-radius: 3px;
+            border-radius: 15px;
             border: none;
             box-sizing: border-box;
             color:white;

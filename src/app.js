@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Redirect  } from 'react-router-dom';
 import GlobalStyles from './globalstyles';
 import Registration from './pages/cadastro';
 import Login from './pages/login';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Home from './pages/Home';
 import BuyCar from './pages/BuyCar';
 import { AuthProvider } from './providers/auth';
+
 
 
 
@@ -27,6 +28,7 @@ function App() {
 //          setApiForm={setApiForm}
 
            />}/>
+          
           <Route path='/cadastro' element={<Registration
           />}/>
           <Route path='/home' element={<Home
@@ -35,6 +37,7 @@ function App() {
           <Route path='/carrinho' element={<BuyCar
           carrinho={carrinho}
           />}/>
+          <Redirect to="/home" />
          
 
 

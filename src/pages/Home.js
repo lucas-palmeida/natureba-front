@@ -35,6 +35,8 @@ export default function Home() {
         axios.get("http://localhost:5001/products")
             .then((res) => {
 
+                console.log(res.data)
+
                 let vegetables = res.data.filter(item => item.category === "legumes")
                 let fruits = res.data.filter(item => item.category === "frutas")
                 let leaf = res.data.filter(item => item.category === "folhas")
