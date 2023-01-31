@@ -26,6 +26,7 @@ export default function BuyCar() {
         }
     ])
 
+    console.log(cart)
     const token = apiForm.token
 
     const config = {
