@@ -1,20 +1,22 @@
 {
-  "dependencies": {
+  "name": "natureba-store",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {    
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
-    "axios": "^1.2.6",
+    "@testing-library/user-event": "^13.5.0",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
+    "axios": "^1.2.1",
     "dotenv": "^16.0.3",
-    "modules": "^0.4.0",
-    "node": "^19.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-router-dom": "^6.8.0",
+    "react-router-dom": "^6.4.5",
     "react-scripts": "^5.0.1",
-    "styled-component": "^2.8.0",
     "styled-components": "^5.3.6",
-    "web-vitals": "^3.1.1"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,20 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "name": "projeto15-natureba-front",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lucas-palmeida/projeto15-natureba-front.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lucas-palmeida/projeto15-natureba-front/issues"
-  },
-  "homepage": "https://github.com/lucas-palmeida/projeto15-natureba-front#readme"
+  }
 }
